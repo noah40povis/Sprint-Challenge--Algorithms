@@ -68,7 +68,7 @@ class SortingRobot:
         If either item is None, return None.
         """
         if self._item is None or self._list[self._position] is None:
-            return None
+            return None 
         elif self._item > self._list[self._position]:
             return 1
         elif self._item < self._list[self._position]:
@@ -92,13 +92,31 @@ class SortingRobot:
         """
         return self._light == "ON"
 
-    def sort(self):
-        """
-        Sort the robot's list.
-        """
-        # Fill this out
-        pass
 
+    def sort(self):
+        # while robot can_move_right
+        while self.can_move_right():
+            # pick up the first item
+            self.swap_item()
+            # while robot can_move_right
+            while self.can_move_right():
+                #move_right
+                self.move_right()
+                # if first item is larger than the next item
+                if self.compare_item() == 1:
+                    # swap the items
+                    self.swap_item()
+            #everything is sorted but now u still have a none item that u need to return to the beginning to the list 
+            # back up to empty space from swap
+            while self.compare_item() != None:
+                # move left
+                self.move_left()
+            # when at the empty space, drop swapped item, and pick up nothing
+            self.swap_item()
+            # move right to the next item in the list
+            self.move_right()
+        
+        return
 
 if __name__ == "__main__":
     # Test our your implementation from the command line
@@ -110,3 +128,13 @@ if __name__ == "__main__":
 
     robot.sort()
     print(robot._list)
+
+'''
+After seeiing similarities with the bubble stort method I decided to choose that one because of the single steps I could 
+take with using the move_right and move_left methods. The first thing I wanted to was to create 
+a loop that will stop once I am unable to go right because I plan on moving right to grab items and swap
+them in ascending order. I was able to swap each item properly by using the compare_item method. 
+When i got to the end of the list i was still hold a 'none' item that I needed to bring back to the start 
+and then continue to move right again to order the list 
+
+'''
